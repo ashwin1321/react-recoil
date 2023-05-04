@@ -1,6 +1,7 @@
 import { atom, selector } from "recoil";
 // atom is a state container that holds a piece of state
 // selector is a function that accepts a piece of state and returns a new state
+import axios from 'axios';
 
 export const recoilCount = atom({            // atom is a state container that holds a piece of state
     key: 'count',                           // unique ID (with respect to other atoms/selectors)
@@ -39,8 +40,6 @@ export const recoilSelector = selector({
 
     // -------------- ERROR HANDLING -----------------//
     // get: async ({ get }) => {
-    //     const count = get(recoilCount);
-    //     const currentMod = get(modifier);
     //     const response = await fetch('https://jsonplaceholder.typicode.com/todos/1');
 
     //     if (!response.ok) {
@@ -82,4 +81,17 @@ export const recoilSelector = selector({
     // --------------------- END -------------------------//
 })
 
+// -------------- Async selector --------------//
 
+export const postsSelector = selector({
+    key: 'posts',
+    get: async () => {
+        try {
+            const response = await axios.get('https://jsonplaceholder.typicode.com/posts');
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            return [];
+        }
+    },
+});

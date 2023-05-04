@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import ReactDOM from 'react-dom/client'
 import Component1 from './Component1.jsx'
 import Comp2 from './comp2.jsx'
@@ -11,8 +11,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 
     {/* get the RecoilRoot from the recoil package and wrap all the componenents inside it */}
     <RecoilRoot>
-      <Component1 />
-      <Comp2 />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Component1 />
+        <Comp2 />
+      </Suspense>
     </RecoilRoot>
   </React.StrictMode>,
 )
